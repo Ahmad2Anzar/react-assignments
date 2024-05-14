@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>T0D0</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+  <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+        
+      function App()
+       
+      {    console.log("hii")
+          let [list,setlist]=React.useState([])
+        let [showdata,setshowdata]=React.useState([])
+       
+       
+        let handlecompleted=()=>
+        {
+          let arr= list.filter((element)=>
+            {return element.status==='complete'
+          // setshowdata((list)=>
+          // {
+          //   list.filter((element)=>
+          //   {return element.status==='completed'
+
+
+          //   })
+           })
+          setshowdata(arr)
+        }
+         let handleincompleted=()=>
+         {
+          setshowdata((list)=>
+          {
+            list.filter((element)=>
+            {return element.status==='incomplete'
+
+
+            })
+          })            
+
+         }
+
+        const handleSubmit=(e) =>
+       
+        {
+           e.preventDefault()
+          let data={
+            title:e.target.title.value,
+            status:e.target.status.value
+          }
+          setlist((prev)=>[...prev,data])
+          setshowdata((prev)=>[...prev,data])
+        }
+        
+        // React.useEffect(()=>{
+        //  console.log(showdata)
+
+        // },[showdata])
+        
+        return(
+          <>
+        <form onSubmit={(e)=>handleSubmit(e)}>
+          <input type="text" name="title"  placeholder="Title" />
+          <label for="kuchbhi">Complete</label>
+          <input type="radio" name="status" value="complete" id="kuchbhi"/>
+          <label for="kuch">Incomplete</label>
+          <input type="radio" name="status" value="incomplete" id="kuch"/>
+          <button  type="submit">Submit</button>
+          </form>  
+          <button onClick={handlecompleted}>completed</button>
+          <button onClick={handleincompleted}>incomplete</button>
+          {
+           showdata!=undefined && showdata.length>0?
+           <>
+
+           <table>
+            <thead><tr>
+                  <th>Title</th>
+                  <th>Status</th></tr>
+                  <tr/></thead>
+           
+           {list.map((ele,i)=>
+            {
+              return(
+                <>
+                <tr>
+                  <td>{ele.title}</td>
+                  <td>{ele.status}</td>
+                  </tr>
+                
+                    
+                </>
+              )
+
+            })
+            
+
+            }
+          </table>
+           </> 
+           
+            :
+            null
+          }
+     </> )
+      }
+
+
+
+        let reactroot=ReactDOM.createRoot(root)
+      reactroot.render(<App/>);
+        
+  </script>
+</html>

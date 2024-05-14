@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Template</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+  <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    let root = document.getElementById("root");
+    let App = () => {
+      let questions = [
+        {
+          question: "what is my name?",
+          options: ["Anzar", "Manzar", "Nazar"],
+          correctAnswer: "Anzar",
+        },
+        {
+          question: "what is my last name?",
+          options: ["Anzar", "Ahmad", "Nazar"],
+          correctAnswer: "Ahmad",
+        },
+        {
+          question: "what is my studentcode?",
+          options: ["08-086", "08-097", "09-09"],
+          correctAnswer: "08-086",
+        },
+      ];
+      const [selectedAnswers, setSelectedAnswers] =React. useState(Array(questions.length).fill(''));
+  const [showScore, setShowScore] =React. useState(false);
+
+  const handleAnswerSelection = (questionIndex, selectedOption) => {
+    const updatedSelectedAnswers = [...selectedAnswers];
+    updatedSelectedAnswers[questionIndex] = selectedOption;
+    setSelectedAnswers(updatedSelectedAnswers);
+  };
+
+  const calculateScore = () => {
+    let score = 0;
+    questions.forEach((question, index) => {
+      if (question.correctAnswer === selectedAnswers[index]) {
+        score++;
+      }
+    });
+    setShowScore(score);
+  };
+
+  const restartQuiz = () => {
+    setSelectedAnswers(Array(questions.length).fill(''));
+    setShowScore(false);
+  };
+
+  return (
+    <div>
+      {showScore !== false ? (
+        <div>
+          <h2>Your Score: {showScore} / {questions.length}</h2>
+          <button onClick={restartQuiz}>Restart Quiz</button>
+        </div>
+      ) : (
+        <div>
+          {questions.map((question, index) => (
+            <div key={index}>
+              <h3>{question.question}</h3>
+              {question.options.map((option, optionIndex) => (
+                <div key={optionIndex}>
+                  <input
+                    type="radio"
+                    id={`option${optionIndex}`}
+                    name={`question${index}`}
+                    value={option}
+                    checked={selectedAnswers[index] === option}
+                    onChange={() => handleAnswerSelection(index, option)}
+                  />
+                  <label htmlFor={`option${optionIndex}`}>{option}</label>
+                </div>
+              ))}
+            </div>
+          ))}
+          <button onClick={calculateScore}>Submit</button>
+        </div>
+      )}
+    </div>
+  );
+    };
+
+    let reactroot = ReactDOM.createRoot(root);
+    reactroot.render(<App />);
+  </script>
+</html>

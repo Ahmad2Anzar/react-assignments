@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Template</title>
+  </head>
+  <body>
+    <div id="root"></div>
+  </body>
+  <script src="https://www.unpkg.com/react@18.2.0/umd/react.development.js"></script>
+  <script src="https://www.unpkg.com/react-dom@18.2.0/umd/react-dom.development.js"></script>
+  <script src="https://unpkg.com/@babel/standalone/babel.min.js"></script>
+  <script type="text/babel">
+    let root=document.getElementById("root")
+    
+    let App = ()=>
+     {
+        let [hobbies,sethobbies]=React.useState([''])
+
+        let handleInputChange =  (e,i)   =>
+        {   
+             
+          let   newHobbies=[...hobbies]
+             newHobbies[i]=e.target.value
+
+             sethobbies(newHobbies)
+             
+        }
+
+        let handleAddHobby=()=>
+        {
+         sethobbies  ( [...hobbies,''])
+        
+        }
+        
+        let handleSubmit=(event)=>
+        {
+            event.preventDefault();
+            console.log(hobbies)
+        }
+        let handleRemoveHobby=(i)=>
+        {
+            let newHobbies=[...hobbies];
+            newHobbies.splice(i,1);
+            sethobbies(newHobbies)
+        }
+
+        return(
+            <form  onSubmit={handleSubmit}>
+             { hobbies.map((hobby,i)  =>
+              (
+                <div key={i}>
+                   
+                    <input type="text"
+                    value={hobby}
+                    onChange={(e)=>handleInputChange(e,i)}/>
+                    {i>0 ? (
+                        <button onClick={()=>handleRemoveHobby(i)}>Remove</button>
+                    ):null}
+                    </div>
+                ))}
+                <button onClick={handleAddHobby}>Add Hobby</button>
+              <button type="submit">Submit</button>
+            </form>
+        )
+    }
+    let reactroot=ReactDOM.createRoot(root)
+      reactroot.render(<App/>);
+
+  </script>
+</html>
