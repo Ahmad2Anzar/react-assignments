@@ -1,18 +1,15 @@
-import { useState } from 'react'
-import AllRoutes from './components/AllRoutes'
-import About from './pages/about'
-import Navbar from './components/navbar'
-
-
-
+import LoadingIndicator from "./components/loading"
+import AllRoutes from "./components/Allroutes"
+import Navbar from "./components/navbar"
 function App() {
- return(
-   <>
-   <Navbar/>
-   <AllRoutes/>
-   
-  </> 
- )
+  
+
+  return (
+    <>
+      <AllRoutes/>
+      <Navbar/>
+    </>
+  )
 }
 
 export default App
